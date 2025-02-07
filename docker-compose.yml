@@ -1,0 +1,10 @@
+services:
+  restaurantsdb:
+    image: mcr.microsoft.com/mssql/server
+
+  redis:
+    image: redis:latest
+
+volumes:
+  sql-data:
+  redis-data:   

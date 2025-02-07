@@ -9,5 +9,5 @@ public class Dish
 
     //public int? KiloCalories { get; set; }
 
-    //public int RestaurantId { get; set; }
+    public int RestaurantId { get; set; }
 }
