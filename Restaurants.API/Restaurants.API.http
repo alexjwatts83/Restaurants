@@ -17,20 +17,31 @@ POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-  "name": "McDonalds",
-  "description": "McDonalds Corporation",
+  "name": "Burger King",
+  "description": "Burger King Corporation is an American multinational chain of hamburger fast food restaurants. Headquartered in Miami-Dade County, Florida, the company was founded in 1953 as Insta-Burger King, a Jacksonville, Florida–based",
   "category": "Fast Food",
   "hasDelivery": true,
-  "contactEmail": "admin@mcdonalds.com",
-  "contactNumber": "1-200-376-9085",
-  "city": "California",
-  "street": "1178 Prospect Valley Road",
-  "postalCode": "90220"
+  "contactEmail": "admin@burgerking.com",
+  "contactNumber": "1-305-378-3000",
+  "city": "Miami",
+  "street": "5707 Blue Lagoon Drive",
+  "postalCode": "33126"
 }
 
 ###
 
-@deleteId=3
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "category": "Fast Food",
+  "contactEmail": "admin",
+  "postalCode": "33126"
+}
+
+###
+
+@deleteId=4
 DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{deleteId}}
 
 ###

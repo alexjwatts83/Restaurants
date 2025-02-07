@@ -30,13 +30,15 @@ public class RestaurantsController(IRestaurantService restaurantService) : Contr
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateRestaurantDto request)
+    public async Task<IActionResult> CreateAsync(CreateRestaurantDto request)
     {
         var entity = request.Adapt<Restaurant>();
         var id = await restaurantService.CreateAsync(request);
 
         if (id <= 0)
             return BadRequest("Not able to create Restaurant");
+
+        entity.Id = id;
 
         return CreatedAtAction(
              nameof(GetById),

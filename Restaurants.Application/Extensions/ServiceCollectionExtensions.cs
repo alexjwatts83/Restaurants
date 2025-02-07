@@ -1,4 +1,6 @@
-﻿using Mapster;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Application.Services;
 using System.Reflection;
@@ -11,16 +13,21 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IRestaurantService, RestaurantService>();
 
-        services.RegisterMapsterConfigurations();
+        var assembly = Assembly.GetExecutingAssembly();
+
+        services.RegisterMapsterConfigurations(assembly);
+
+        services.AddValidatorsFromAssembly(assembly)
+            .AddFluentValidationAutoValidation();
 
         return services;
     }
 
-    public static IServiceCollection RegisterMapsterConfigurations(this IServiceCollection services)
+    public static IServiceCollection RegisterMapsterConfigurations(this IServiceCollection services, Assembly assembly)
     {
         var config = TypeAdapterConfig.GlobalSettings;
-        
-        config.Scan(Assembly.GetExecutingAssembly());
+
+        config.Scan(assembly);
 
         services.AddSingleton(config);
 

@@ -1,4 +1,5 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistence;
 
 namespace Restaurants.Infrastructure.Seeders;
@@ -7,18 +8,24 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
 {
     public async Task Seed()
     {
-        if (await dbContext.Database.CanConnectAsync())
-        {
-            if (!dbContext.Restaurants.Any())
-            {
-                var restaurants = GetRestaurants();
-                dbContext.Restaurants.AddRange(restaurants);
-                await dbContext.SaveChangesAsync();
-            }
-        }
+        if (dbContext.Database.GetPendingMigrations().Any())
+            await dbContext.Database.MigrateAsync();
+
+        if (!await dbContext.Database.CanConnectAsync())
+            return;
+
+        if (!dbContext.Restaurants.Any())
+            await SeedRestaurants(dbContext);
     }
 
-    private static IEnumerable<Restaurant> GetRestaurants()
+    private static async Task SeedRestaurants(RestaurantsDbContext dbContext)
+    {
+        var restaurants = GetRestaurants();
+        dbContext.Restaurants.AddRange(restaurants);
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static List<Restaurant> GetRestaurants()
     {
         List<Restaurant> restaurants = [
             new()
@@ -26,7 +33,8 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 Name = "KFC",
                 Category = "Fast Food",
                 Description =
-                    "KFC (short for Kentucky Fried Chicken) is an American fast food restaurant chain headquartered in Louisville, Kentucky, that specializes in fried chicken.",
+                    "KFC (short for Kentucky Fried Chicken) is an American fast food restaurant chain headquartered in Louisville, Kentucky, " +
+                    "that specializes in fried chicken.",
                 ContactEmail = "contact@kfc.com",
                 HasDelivery = true,
                 Dishes =
