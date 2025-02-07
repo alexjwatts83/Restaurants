@@ -1,4 +1,4 @@
-﻿namespace Restaurants.Application.Entities;
+﻿namespace Restaurants.Domain.Entities;
 
 public class Address
 {
