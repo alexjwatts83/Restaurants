@@ -7,7 +7,7 @@ Accept: application/json
 
 ###
 
-@id=1
+@id=122
 GET {{Restaurants.API_HostAddress}}/api/restaurant/{{id}}
 Accept: application/json
 
