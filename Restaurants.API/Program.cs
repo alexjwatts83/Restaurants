@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 
 builder.Services
     .AddApplicationServices()
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 

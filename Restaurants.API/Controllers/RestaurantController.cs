@@ -14,4 +14,15 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
 
         return Ok(entities);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var entity = await restaurantService.GeByIdAsync(id);
+
+        if (entity == null)
+            return NotFound($"Restaurant of Id '{id}' not found");
+
+        return Ok(entity);
+    }
 }

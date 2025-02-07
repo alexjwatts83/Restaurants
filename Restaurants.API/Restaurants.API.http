@@ -1,9 +1,14 @@
 @host = http://localhost
 @port = 5146
-@Restaurants.API_HostAddress = {{host}}:{{port}}
-@weatherforecastEndPoint ={{Restaurants.API_HostAddress}}/api/weatherforecast/
+@Restaurants.API_HostAddress = https://localhost:7264
 
-GET {{weatherforecastEndPoint}}
+GET {{Restaurants.API_HostAddress}}/api/restaurant
+Accept: application/json
+
+###
+
+@id=1
+GET {{Restaurants.API_HostAddress}}/api/restaurant/{{id}}
 Accept: application/json
 
 ###
