@@ -1,7 +1,6 @@
 using Restaurants.API.Extensions;
-using Restaurants.API.Interfaces;
-using Restaurants.API.Services;
 using Restaurants.Infrastructure.Extensions;
+using Restaurants.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>();
-
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services
+    .AddApplicationServices()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
