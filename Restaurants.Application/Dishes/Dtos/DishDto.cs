@@ -1,7 +1,4 @@
-﻿using Mapster;
-using Restaurants.Domain.Entities;
-
-namespace Restaurants.Application.Dishes.Dtos;
+﻿namespace Restaurants.Application.Dishes.Dtos;
 
 public class DishDto
 {
@@ -11,13 +8,4 @@ public class DishDto
     public decimal Price { get; set; }
 
     public int? KiloCalories { get; set; }
-}
-
-public class DishMappingConfig : IRegister
-{
-    public void Register(TypeAdapterConfig config)
-    {
-        TypeAdapterConfig<Dish, DishDto>
-            .NewConfig();
-    }
 }

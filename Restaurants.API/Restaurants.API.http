@@ -12,3 +12,20 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
 Accept: application/json
 
 ###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "McDonalds",
+  "description": "McDonalds Corporation",
+  "category": "Fast Food",
+  "hasDelivery": true,
+  "contactEmail": "admin@mcdonalds.com",
+  "contactNumber": "1-200-376-9085",
+  "city": "California",
+  "street": "1178 Prospect Valley Road",
+  "postalCode": "90220"
+}
+
+###

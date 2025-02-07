@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
+using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Services;
+using Restaurants.Domain.Entities;
 
 namespace Restaurants.API.Controllers;
 
@@ -24,5 +27,21 @@ public class RestaurantsController(IRestaurantService restaurantService) : Contr
             return NotFound($"Restaurant of Id '{id}' not found");
 
         return Ok(entity);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync([FromBody] CreateRestaurantDto request)
+    {
+        var entity = request.Adapt<Restaurant>();
+        var id = await restaurantService.CreateAsync(entity);
+
+        if (id <= 0)
+            return BadRequest("Not able to create Restaurant");
+
+        return CreatedAtAction(
+             nameof(GetById),
+             new { id },
+             entity.Adapt<RestaurantDto>()
+        );
     }
 }
