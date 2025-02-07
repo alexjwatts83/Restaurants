@@ -2,13 +2,13 @@
 @port = 5146
 @Restaurants.API_HostAddress = https://localhost:7264
 
-GET {{Restaurants.API_HostAddress}}/api/restaurant
+GET {{Restaurants.API_HostAddress}}/api/restaurants
 Accept: application/json
 
 ###
 
-@id=122
-GET {{Restaurants.API_HostAddress}}/api/restaurant/{{id}}
+@id=1
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
 Accept: application/json
 
 ###

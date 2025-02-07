@@ -5,7 +5,7 @@ namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RestaurantController(IRestaurantService restaurantService) : ControllerBase
+public class RestaurantsController(IRestaurantService restaurantService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
