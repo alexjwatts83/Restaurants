@@ -16,6 +16,20 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         return entity.Id;
     }
 
+    public async Task<(bool, string?)> DeleteByIdAsync(int id)
+    {
+        var entity = await dbContext.Restaurants.FindAsync(id);
+
+        if (entity == null)
+            return (false, $"Restaurant with '{id}' doesnt exists");
+
+        dbContext.Remove(entity);
+
+        await dbContext.SaveChangesAsync();
+
+        return (true, null);
+    }
+
     public async Task<Restaurant?> GeByIdAsync(int id)
     {
         var restaurant = await dbContext.Restaurants.Include(x => x.Dishes).FirstOrDefaultAsync(x => x.Id == id);

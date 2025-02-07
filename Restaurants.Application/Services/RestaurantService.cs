@@ -8,9 +8,11 @@ namespace Restaurants.Application.Services;
 
 public class RestaurantService(IRestaurantsRepository repository, ILogger<RestaurantService> logger) : IRestaurantService
 {
-    public async Task<int> CreateAsync(Restaurant entity)
+    public async Task<int> CreateAsync(CreateRestaurantDto request)
     {
-        logger.LogInformation("Creating Restaurant {@Entity}", entity);
+        logger.LogInformation("Creating Restaurant {@Request}", request);
+
+        var entity = request.Adapt<Restaurant>();
 
         var id = await repository.Create(entity);
 
@@ -33,5 +35,12 @@ public class RestaurantService(IRestaurantsRepository repository, ILogger<Restau
         var entities = await repository.GetAllAsync();
 
         return entities.Adapt<List<RestaurantDto>>();
+    }
+
+    public async Task<(bool, string?)> DeleteByIdAsync(int id)
+    {
+        logger.LogInformation("Deleting Restaurant by id '{Id}'", id);
+
+        return await repository.DeleteByIdAsync(id);
     }
 }

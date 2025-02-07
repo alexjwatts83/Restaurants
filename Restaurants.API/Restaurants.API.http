@@ -29,3 +29,8 @@ Content-Type: application/json
 }
 
 ###
+
+@deleteId=3
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{deleteId}}
+
+###

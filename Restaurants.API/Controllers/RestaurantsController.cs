@@ -33,7 +33,7 @@ public class RestaurantsController(IRestaurantService restaurantService) : Contr
     public async Task<IActionResult> CreateAsync([FromBody] CreateRestaurantDto request)
     {
         var entity = request.Adapt<Restaurant>();
-        var id = await restaurantService.CreateAsync(entity);
+        var id = await restaurantService.CreateAsync(request);
 
         if (id <= 0)
             return BadRequest("Not able to create Restaurant");
@@ -43,5 +43,16 @@ public class RestaurantsController(IRestaurantService restaurantService) : Contr
              new { id },
              entity.Adapt<RestaurantDto>()
         );
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteByIdAsync(int id)
+    {
+        var (successful, errorMessage) = await restaurantService.DeleteByIdAsync(id);
+
+        if (!successful)
+            return NotFound(errorMessage);
+
+        return NoContent();
     }
 }

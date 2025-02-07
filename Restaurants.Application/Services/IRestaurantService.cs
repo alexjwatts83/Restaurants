@@ -1,5 +1,4 @@
 ﻿using Restaurants.Application.Restaurants.Dtos;
-using Restaurants.Domain.Entities;
 
 namespace Restaurants.Application.Services;
 
@@ -9,5 +8,7 @@ public interface IRestaurantService
 
     Task<RestaurantDto?> GeByIdAsync(int id);
 
-    Task<int> CreateAsync(Restaurant entity);
+    Task<int> CreateAsync(CreateRestaurantDto request);
+
+    Task<(bool, string?)> DeleteByIdAsync(int id);
 }
