@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddSwaggerGen();
 
         services.AddScoped<ErrorHandlingMiddleware>();
+        services.AddScoped<RequestTimeLoggingMiddleware>();
 
         return services;
     }
