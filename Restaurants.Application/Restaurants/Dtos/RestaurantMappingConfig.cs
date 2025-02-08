@@ -23,5 +23,8 @@ public class RestaurantMappingConfig : IRegister
                 Street = src.Street,
             })
             .Map(dest => dest.Dishes, src => new List<Dish>());
+
+        TypeAdapterConfig<UpdateRestaurantCommand, Restaurant>
+            .NewConfig();
     }
 }

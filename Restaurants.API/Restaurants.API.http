@@ -45,3 +45,15 @@ Content-Type: application/json
 DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{deleteId}}
 
 ###
+
+@updateId=6
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/{{updateId}}
+Content-Type: application/json
+
+{
+  "name": "Burger King - Updated",
+  "description": "Burger King Corporation is an American multinational chain of hamburger fast food restaurants. Headquartered in Miami-Dade County, Florida, the company was founded in 1953 as Insta-Burger King, a Jacksonville, Florida–based - Updated",
+  "hasDelivery": false
+}
+
+###
