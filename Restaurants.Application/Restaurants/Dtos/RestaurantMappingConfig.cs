@@ -1,7 +1,4 @@
-﻿using Restaurants.Application.Dishes.Dtos;
-using Restaurants.Application.Restaurants.Commands;
-
-namespace Restaurants.Application.Restaurants.Dtos;
+﻿namespace Restaurants.Application.Restaurants.Dtos;
 
 public class RestaurantMappingConfig : IRegister
 {

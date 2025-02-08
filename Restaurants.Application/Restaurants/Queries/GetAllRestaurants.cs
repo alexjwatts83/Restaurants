@@ -1,7 +1,4 @@
-﻿
-using Restaurants.Application.Restaurants.Commands;
-
-namespace Restaurants.Application.Restaurants.Queries;
+﻿namespace Restaurants.Application.Restaurants.Queries;
 
 public class GetAllRestaurantsQuery : IQuery<IEnumerable<RestaurantDto>>
 {
