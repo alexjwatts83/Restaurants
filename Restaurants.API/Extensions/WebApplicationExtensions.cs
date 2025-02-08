@@ -1,4 +1,5 @@
 ﻿using Restaurants.API.Middleware;
+using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
 
@@ -36,6 +37,13 @@ public static class WebApplicationExtensions
         }
 
         app.UseHttpsRedirection();
+
+        app
+            .MapGroup("api/identity")
+            .WithTags("Identity")
+            .MapIdentityApi<AppUser>();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

@@ -1,7 +1,10 @@
-﻿namespace Restaurants.API.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace Restaurants.API.Controllers;
 
 [Route("api/restaurants/{restaurantId}/dishes")]
 [ApiController]
+[Authorize]
 public class DishesController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
@@ -10,6 +13,7 @@ public class DishesController(IMediator mediator) : ControllerBase
         command.RestaurantId = restaurantId;
 
         var dishId = await mediator.Send(command);
+
         return CreatedAtAction(nameof(GetByIdForRestaurant), new { restaurantId, dishId }, null);
     }
 
@@ -18,6 +22,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<IEnumerable<DishDto>>> GetAllForRestaurant([FromRoute] int restaurantId)
     {
         var dishes = await mediator.Send(new GetDishesForRestaurantQuery(restaurantId));
+
         return Ok(dishes);
     }
 
@@ -25,6 +30,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<DishDto>> GetByIdForRestaurant([FromRoute] int restaurantId, [FromRoute] int dishId)
     {
         var dish = await mediator.Send(new GetDishByIdForRestaurantQuery(restaurantId, dishId));
+
         return Ok(dish);
     }
 

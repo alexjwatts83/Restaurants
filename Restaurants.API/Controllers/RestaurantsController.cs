@@ -1,14 +1,18 @@
-﻿using Restaurants.Application.Restaurants.Dtos;
+﻿using Microsoft.AspNetCore.Authorization;
+using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Domain.Identity;
 
 namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RestaurantsController(IMediator mediator) : ControllerBase
+[Authorize]
+public class RestaurantsController(IMediator mediator, IUserContext userContext) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllAsync()
     {
+        var user  = userContext.GetCurrentUser();
         var request = new GetAllRestaurantsQuery();
         var entities = await mediator.Send(request);
 
