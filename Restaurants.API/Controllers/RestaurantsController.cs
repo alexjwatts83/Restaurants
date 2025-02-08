@@ -1,19 +1,14 @@
-﻿using Mapster;
-using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Restaurants.Dtos;
-using Restaurants.Application.Services;
-using Restaurants.Domain.Entities;
-
-namespace Restaurants.API.Controllers;
+﻿namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RestaurantsController(IRestaurantService restaurantService) : ControllerBase
+public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
-        var entities = await restaurantService.GetAllAsync();
+        var request = new GetAllRestaurantsQuery();
+        var entities = await mediator.Send(request);
 
         return Ok(entities);
     }
@@ -21,39 +16,22 @@ public class RestaurantsController(IRestaurantService restaurantService) : Contr
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var entity = await restaurantService.GeByIdAsync(id);
-
-        if (entity == null)
-            return NotFound($"Restaurant of Id '{id}' not found");
-
-        return Ok(entity);
+        var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
+        return Ok(restaurant);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(CreateRestaurantDto request)
+    public async Task<IActionResult> CreateAsync(CreateRestaurantCommand command)
     {
-        var entity = request.Adapt<Restaurant>();
-        var id = await restaurantService.CreateAsync(request);
+        var id = await mediator.Send(command);
 
-        if (id <= 0)
-            return BadRequest("Not able to create Restaurant");
-
-        entity.Id = id;
-
-        return CreatedAtAction(
-             nameof(GetById),
-             new { id },
-             entity.Adapt<RestaurantDto>()
-        );
+        return CreatedAtAction(nameof(GetById), new { id }, null);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteByIdAsync(int id)
     {
-        var (successful, errorMessage) = await restaurantService.DeleteByIdAsync(id);
-
-        if (!successful)
-            return NotFound(errorMessage);
+        await mediator.Send(new DeleteRestaurantCommand(id));
 
         return NoContent();
     }

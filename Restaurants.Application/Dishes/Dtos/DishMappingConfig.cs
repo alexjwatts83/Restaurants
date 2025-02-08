@@ -1,7 +1,4 @@
-﻿using Mapster;
-using Restaurants.Domain.Entities;
-
-namespace Restaurants.Application.Dishes.Dtos;
+﻿namespace Restaurants.Application.Dishes.Dtos;
 
 public class DishMappingConfig : IRegister
 {

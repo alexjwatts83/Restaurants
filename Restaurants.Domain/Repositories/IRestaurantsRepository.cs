@@ -5,7 +5,7 @@ namespace Restaurants.Domain.Repositories;
 public interface IRestaurantsRepository
 {
     Task<IEnumerable<Restaurant>> GetAllAsync();
-    Task<Restaurant?> GeByIdAsync(int id);
-    Task<int> Create(Restaurant entity);
-    Task<(bool, string?)> DeleteByIdAsync(int id);
+    Task<Restaurant?> GetByIdAsync(int id);
+    Task<int> CreateAsync(Restaurant entity);
+    Task DeleteByIdAsync(Restaurant entity);
 }

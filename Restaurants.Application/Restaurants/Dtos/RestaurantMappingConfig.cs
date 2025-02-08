@@ -1,6 +1,5 @@
-﻿using Mapster;
-using Restaurants.Application.Dishes.Dtos;
-using Restaurants.Domain.Entities;
+﻿using Restaurants.Application.Dishes.Dtos;
+using Restaurants.Application.Restaurants.Commands;
 
 namespace Restaurants.Application.Restaurants.Dtos;
 
@@ -10,12 +9,12 @@ public class RestaurantMappingConfig : IRegister
     {
         TypeAdapterConfig<Restaurant, RestaurantDto>
             .NewConfig()
-            .Map(dest => dest.City, src => src.Address.City)
-            .Map(dest => dest.Street, src => src.Address.Street)
-            .Map(dest => dest.PostalCode, src => src.Address.PostalCode)
+            .Map(dest => dest.City, src => src.Address == null ? null : src.Address.City)
+            .Map(dest => dest.Street, src => src.Address == null ? null : src.Address.Street)
+            .Map(dest => dest.PostalCode, src => src.Address == null ? null : src.Address.PostalCode)
             .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<DishDto>>());
 
-        TypeAdapterConfig<CreateRestaurantDto, Restaurant>
+        TypeAdapterConfig<CreateRestaurantCommand, Restaurant>
             .NewConfig()
             .Map(dest => dest.Address, src => new Address()
             {

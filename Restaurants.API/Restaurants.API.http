@@ -19,13 +19,13 @@ Content-Type: application/json
 {
   "name": "Burger King",
   "description": "Burger King Corporation is an American multinational chain of hamburger fast food restaurants. Headquartered in Miami-Dade County, Florida, the company was founded in 1953 as Insta-Burger King, a Jacksonville, Florida–based",
-  "category": "Fast Food",
+  "category": "American",
   "hasDelivery": true,
   "contactEmail": "admin@burgerking.com",
   "contactNumber": "1-305-378-3000",
   "city": "Miami",
   "street": "5707 Blue Lagoon Drive",
-  "postalCode": "33126"
+  "postalCode": "33-126"
 }
 
 ###
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 ###
 
-@deleteId=4
+@deleteId=5
 DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{deleteId}}
 
 ###
