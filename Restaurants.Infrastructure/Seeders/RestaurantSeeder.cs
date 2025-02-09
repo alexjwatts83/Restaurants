@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistence;
 
 namespace Restaurants.Infrastructure.Seeders;
 
-internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSeeder
+internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppUser> userManager)
+    : IRestaurantSeeder
 {
     public async Task Seed()
     {
@@ -16,13 +19,73 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
 
         if (!dbContext.Restaurants.Any())
             await SeedRestaurants(dbContext);
+
+        if (!dbContext.Roles.Any())
+            await SeedRoles(dbContext);
+
+        if (!dbContext.Users.Any())
+            await SeedUsers(userManager);
     }
 
     private static async Task SeedRestaurants(RestaurantsDbContext dbContext)
     {
-        var restaurants = GetRestaurants();
-        dbContext.Restaurants.AddRange(restaurants);
+        var entities = GetRestaurants();
+        dbContext.Restaurants.AddRange(entities);
         await dbContext.SaveChangesAsync();
+    }
+
+    private static async Task SeedRoles(RestaurantsDbContext dbContext)
+    {
+        var entities = GetRoles();
+        dbContext.Roles.AddRange(entities);
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static async Task SeedUsers(UserManager<AppUser> userManager)
+    {
+        await SeedUser(userManager, "admin@test.com", UserRoles.Admin);
+        await SeedUser(userManager, "owner@test.com", UserRoles.Owner);
+        await SeedUser(userManager, "ckent@test.com", UserRoles.User);
+    }
+
+    private static async Task SeedUser(UserManager<AppUser> userManager, string email, string role)
+    {
+        if (userManager.Users.Any(x => x.UserName == email))
+            return;
+
+        var user = new AppUser
+        {
+            Email = email,
+            UserName = email
+        };
+
+        var result = await userManager.CreateAsync(user, "Pa$$wOrd321");
+
+        if (!result.Succeeded)
+            throw new InvalidOperationException("User Failed to create");
+
+        await userManager.AddToRoleAsync(user, role);
+    }
+
+    private static IEnumerable<IdentityRole> GetRoles()
+    {
+        List<IdentityRole> roles =
+            [
+                new (UserRoles.User)
+                {
+                    NormalizedName = UserRoles.User.ToUpper()
+                },
+                new (UserRoles.Owner)
+                {
+                    NormalizedName = UserRoles.Owner.ToUpper()
+                },
+                new (UserRoles.Admin)
+                {
+                    NormalizedName = UserRoles.Admin.ToUpper()
+                },
+            ];
+
+        return roles;
     }
 
     private static List<Restaurant> GetRestaurants()
