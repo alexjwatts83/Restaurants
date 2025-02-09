@@ -25,8 +25,12 @@ public class CreateDishCommandValidator : AbstractValidator<CreateDishCommand>
     }
 }
 
-public class CreateDishCommandHandler(IRestaurantsRepository restaurantsRepository, IDishesRepository repository, ILogger<CreateDishCommandHandler> logger)
-    : ICommandHandler<CreateDishCommand, int>
+public class CreateDishCommandHandler(
+    IRestaurantsRepository restaurantsRepository,
+    IDishesRepository repository,
+    IRestaurantAuthorizationService authService,
+    ILogger<CreateDishCommandHandler> logger)
+        : ICommandHandler<CreateDishCommand, int>
 {
     public async Task<int> Handle(CreateDishCommand request, CancellationToken cancellationToken)
     {
@@ -36,6 +40,9 @@ public class CreateDishCommandHandler(IRestaurantsRepository restaurantsReposito
 
         if (restaurant == null)
             throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+
+        if (!authService.Authorize(restaurant, ResourceOperation.Update))
+            throw new ForbidException();
 
         var entity = request.Adapt<Dish>();
 

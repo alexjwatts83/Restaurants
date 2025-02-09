@@ -13,3 +13,6 @@ global using Restaurants.Domain.Identity;
 global using Restaurants.Application.Restaurants.Dtos;
 global using Restaurants.Application.Restaurants.Commands;
 global using Restaurants.Application.Dishes.Dtos;
+
+global using Restaurants.Domain.Constants;
+global using Restaurants.Domain.Interfaces;

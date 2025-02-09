@@ -17,7 +17,10 @@ public class UpdateRestaurantCommandValidator : AbstractValidator<UpdateRestaura
     }
 }
 
-public class UpdateRestaurantCommandHandler(IRestaurantsRepository repository, ILogger<UpdateRestaurantCommandHandler> logger)
+public class UpdateRestaurantCommandHandler(
+    IRestaurantsRepository repository,
+    IRestaurantAuthorizationService authService,
+    ILogger<UpdateRestaurantCommandHandler> logger)
     : ICommandHandler<UpdateRestaurantCommand>
 {
     public async Task<Unit> Handle(UpdateRestaurantCommand command, CancellationToken cancellationToken)
@@ -28,6 +31,9 @@ public class UpdateRestaurantCommandHandler(IRestaurantsRepository repository, I
 
         if (restaurant is null)
             throw new NotFoundException(nameof(Restaurant), command.Id.ToString());
+
+        if (!authService.Authorize(restaurant, ResourceOperation.Update))
+            throw new ForbidException();
 
         restaurant = command.Adapt(restaurant);
 

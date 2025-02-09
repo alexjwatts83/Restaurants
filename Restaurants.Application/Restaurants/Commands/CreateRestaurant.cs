@@ -1,4 +1,6 @@
-﻿namespace Restaurants.Application.Restaurants.Commands;
+﻿using Restaurants.Domain.Entities;
+
+namespace Restaurants.Application.Restaurants.Commands;
 
 public class CreateRestaurantCommand : ICommand<int>
 {
@@ -46,6 +48,7 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaura
 public class CreateRestaurantCommandHandler(
     IRestaurantsRepository repository,
     IUserContext userContext,
+    IRestaurantAuthorizationService authService,
     ILogger<CreateRestaurantCommandHandler> logger)
         : ICommandHandler<CreateRestaurantCommand, int>
 {
@@ -56,6 +59,9 @@ public class CreateRestaurantCommandHandler(
         logger.LogInformation("{UserEmail} ('{UserId}') is creating restaurant {@Request}", user!.Email, user.Id, request);
 
         var entity = request.Adapt<Restaurant>();
+
+        if (!authService.Authorize(entity, ResourceOperation.Create))
+            throw new ForbidException();
 
         entity.OwnerId = user.Id;
 

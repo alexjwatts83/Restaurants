@@ -8,8 +8,9 @@ public class DeleteDishesForRestaurantCommand(int restaurantId) : ICommand
 public class DeleteDishesForRestaurantCommandHandler(
     IRestaurantsRepository restaurantsRepository,
     IDishesRepository repository,
+    IRestaurantAuthorizationService authService,
     ILogger<DeleteDishesForRestaurantCommandHandler> logger) 
-    : ICommandHandler<DeleteDishesForRestaurantCommand>
+        : ICommandHandler<DeleteDishesForRestaurantCommand>
 {
     public async Task<Unit> Handle(DeleteDishesForRestaurantCommand request, CancellationToken cancellationToken)
     {
@@ -19,6 +20,9 @@ public class DeleteDishesForRestaurantCommandHandler(
 
         if (restaurant == null) 
             throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+
+        if (!authService.Authorize(restaurant, ResourceOperation.Update))
+            throw new ForbidException();
 
         await repository.DeleteAsync(restaurant.Dishes);
 

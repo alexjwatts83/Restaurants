@@ -54,6 +54,9 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         await SeedUser(userManager, "german@test.com", new DateOnly(1985, 1, 7), "German", UserRoles.User);
         await SeedUser(userManager, "polish@test.com", new DateOnly(1983, 1, 7), "Polish", UserRoles.User);
         await SeedUser(userManager, "young@test.com", new DateOnly(2015, 1, 7), null, UserRoles.User);
+
+        foreach (var i in Enumerable.Range(1, 5))
+            await SeedUser(userManager, $"owner{i}@test.com", null, null, UserRoles.Owner);
     }
 
     private static async Task SeedUser(UserManager<AppUser> userManager, string email, DateOnly? dateOfBirth, string? nationality, params string[] roles)

@@ -1,5 +1,4 @@
 ﻿using Restaurants.Domain.Constants;
-using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 
@@ -21,7 +20,6 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpGet("{id}")]
-    //[Authorize(Policy = PolicyNames.AtLeast20)]
     public async Task<ActionResult<RestaurantDto?>> GetById(int id)
     {
         var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
@@ -30,7 +28,7 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpPost]
-    [Authorize(Roles = UserRoles.Owner)]
+    //[Authorize(Roles = UserRoles.Owner)]
     public async Task<IActionResult> CreateAsync(CreateRestaurantCommand command)
     {
         var id = await mediator.Send(command);
@@ -51,7 +49,6 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = UserRoles.Admin)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(int id)
