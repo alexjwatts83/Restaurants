@@ -3,15 +3,16 @@
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class RestaurantsController(IMediator mediator, IUserContext userContext) : ControllerBase
+public class RestaurantsController(IMediator mediator/*, IUserContext userContext*/) : ControllerBase
 {
     [HttpGet]
+    [AllowAnonymous]
     //[Authorize(Policy = PolicyNames.CreatedAtleast2Restaurants)]
-    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllAsync([FromQuery] GetAllRestaurantsQuery request)
     {
-        var user  = userContext.GetCurrentUser();
+        //var user  = userContext.GetCurrentUser();
 
-        var request = new GetAllRestaurantsQuery();
+        //var request = new GetAllRestaurantsQuery();
 
         var entities = await mediator.Send(request);
 

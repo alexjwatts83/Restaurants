@@ -10,6 +10,7 @@ global using Restaurants.Domain.Entities;
 global using Restaurants.Domain.Exceptions;
 global using Restaurants.Domain.Identity;
 
+global using Restaurants.Application.Common;
 global using Restaurants.Application.Restaurants.Dtos;
 global using Restaurants.Application.Restaurants.Commands;
 global using Restaurants.Application.Dishes.Dtos;

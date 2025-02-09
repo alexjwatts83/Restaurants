@@ -1,6 +1,4 @@
-﻿using Restaurants.Domain.Entities;
-
-namespace Restaurants.Application.Restaurants.Commands;
+﻿namespace Restaurants.Application.Restaurants.Commands;
 
 public class CreateRestaurantCommand : ICommand<int>
 {
