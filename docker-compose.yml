@@ -5,6 +5,10 @@ services:
   redis:
     image: redis:latest
 
+  seq:
+    image: datalust/seq:latest
+
 volumes:
   sql-data:
-  redis-data:   
+  redis-data:
+  seq-data:
