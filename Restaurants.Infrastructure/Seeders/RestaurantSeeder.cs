@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistence;
+using System.Data;
 
 namespace Restaurants.Infrastructure.Seeders;
 
@@ -46,9 +47,10 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         await SeedUser(userManager, "admin@test.com", UserRoles.Admin);
         await SeedUser(userManager, "owner@test.com", UserRoles.Owner);
         await SeedUser(userManager, "ckent@test.com", UserRoles.User);
+        await SeedUser(userManager, "test@test.com", UserRoles.User, "Role1");
     }
 
-    private static async Task SeedUser(UserManager<AppUser> userManager, string email, string role)
+    private static async Task SeedUser(UserManager<AppUser> userManager, string email, params string[] roles)
     {
         if (userManager.Users.Any(x => x.UserName == email))
             return;
@@ -64,7 +66,8 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         if (!result.Succeeded)
             throw new InvalidOperationException("User Failed to create");
 
-        await userManager.AddToRoleAsync(user, role);
+        foreach (var role in roles)
+            await userManager.AddToRoleAsync(user, role);
     }
 
     private static IEnumerable<IdentityRole> GetRoles()
@@ -84,6 +87,20 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
                     NormalizedName = UserRoles.Admin.ToUpper()
                 },
             ];
+
+        var moreRoles = Enumerable
+            .Range(1, 9)
+            .Select(x =>
+            {
+                var roleName = $"Role{x}";
+                return new IdentityRole(roleName)
+                {
+                    NormalizedName = roleName.ToUpper()
+                };
+            })
+            .ToList();
+
+        roles.AddRange(moreRoles);
 
         return roles;
     }

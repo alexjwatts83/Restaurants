@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddAuthentication();
 
         services.AddOptions<BearerTokenOptions>(IdentityConstants.BearerScheme).Configure(options => {
-            options.BearerTokenExpiration = TimeSpan.FromSeconds(60);
+            options.BearerTokenExpiration = TimeSpan.FromSeconds(60 * 3);
         });
 
         services.AddControllers();

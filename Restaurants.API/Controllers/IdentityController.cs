@@ -1,4 +1,6 @@
-﻿namespace Restaurants.API.Controllers;
+﻿using Restaurants.Domain.Constants;
+
+namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/identity")]
@@ -22,5 +24,23 @@ public class IdentityController(IMediator mediator) : ControllerBase
         var user = await mediator.Send(query);
 
         return Ok(user);
+    }
+
+    [HttpPost("userRole")]
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> AssignUserRole(AssignUserRoleCommand command)
+    {
+        await mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpDelete("userRole")]
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
+    {
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Restaurants.API.Controllers;
+﻿using Restaurants.Domain.Constants;
+
+namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -43,6 +45,7 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = UserRoles.Admin)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(int id)
