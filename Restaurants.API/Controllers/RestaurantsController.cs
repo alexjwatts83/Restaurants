@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Restaurants.Application.Restaurants.Dtos;
-using Restaurants.Domain.Identity;
-
-namespace Restaurants.API.Controllers;
+﻿namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

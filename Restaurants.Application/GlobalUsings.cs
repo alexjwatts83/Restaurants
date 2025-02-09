@@ -12,3 +12,10 @@ global using Restaurants.Application.Restaurants.Dtos;
 global using Restaurants.Application.Restaurants.Commands;
 global using Restaurants.Application.Restaurants.Queries;
 global using Restaurants.Application.Dishes.Dtos;
+
+global using Microsoft.AspNetCore.Identity;
+global using Restaurants.Domain.Identity;
+
+//global using Microsoft.AspNetCore.Authorization;
+//global using Restaurants.Application.Restaurants.Dtos;
+//global using Restaurants.Domain.Identity;

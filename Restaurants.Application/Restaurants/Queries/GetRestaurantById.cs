@@ -5,7 +5,7 @@ public class GetRestaurantByIdQuery(int id) : IQuery<RestaurantDto>
     public int Id { get; private set; } = id;
 }
 
-public class GetRestaurantByIdQueryHanlder(IRestaurantsRepository repository, ILogger<GetRestaurantByIdQueryHanlder> logger)
+public class GetRestaurantByIdQueryHandler(IRestaurantsRepository repository, ILogger<GetRestaurantByIdQueryHandler> logger)
     : IQueryHandler<GetRestaurantByIdQuery, RestaurantDto>
 {
     public async Task<RestaurantDto> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)

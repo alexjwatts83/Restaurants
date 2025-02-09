@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Restaurants.Application.Users.Commands;
-
-namespace Restaurants.API.Controllers;
+﻿namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/identity")]
@@ -14,5 +11,16 @@ public class IdentityController(IMediator mediator) : ControllerBase
         await mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpGet("user")]
+    [Authorize]
+    public async Task<ActionResult<CurrentUser?>> GetUserDetails()
+    {
+        var query = new GetUserDetailsQuery();
+
+        var user = await mediator.Send(query);
+
+        return Ok(user);
     }
 }

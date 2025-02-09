@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace Restaurants.API.Controllers;
+﻿namespace Restaurants.API.Controllers;
 
 [Route("api/restaurants/{restaurantId}/dishes")]
 [ApiController]

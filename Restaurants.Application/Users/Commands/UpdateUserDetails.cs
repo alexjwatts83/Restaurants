@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Restaurants.Domain.Identity;
-
-namespace Restaurants.Application.Users.Commands;
+﻿namespace Restaurants.Application.Users.Commands;
 
 public class UpdateUserDetailsCommand : ICommand
 {
