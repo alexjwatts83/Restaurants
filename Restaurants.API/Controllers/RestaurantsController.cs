@@ -1,6 +1,4 @@
-﻿using Restaurants.Domain.Constants;
-
-namespace Restaurants.API.Controllers;
+﻿namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -8,6 +6,7 @@ namespace Restaurants.API.Controllers;
 public class RestaurantsController(IMediator mediator, IUserContext userContext) : ControllerBase
 {
     [HttpGet]
+    //[Authorize(Policy = PolicyNames.CreatedAtleast2Restaurants)]
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllAsync()
     {
         var user  = userContext.GetCurrentUser();
