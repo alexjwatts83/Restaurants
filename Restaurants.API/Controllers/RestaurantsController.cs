@@ -21,7 +21,7 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = PolicyNames.AtLeast20)]
+    //[Authorize(Policy = PolicyNames.AtLeast20)]
     public async Task<ActionResult<RestaurantDto?>> GetById(int id)
     {
         var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
@@ -30,6 +30,7 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRoles.Owner)]
     public async Task<IActionResult> CreateAsync(CreateRestaurantCommand command)
     {
         var id = await mediator.Send(command);

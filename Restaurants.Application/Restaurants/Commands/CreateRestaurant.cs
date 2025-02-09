@@ -43,14 +43,21 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaura
     }
 }
 
-public class CreateRestaurantCommandHandler(IRestaurantsRepository repository, ILogger<CreateRestaurantCommandHandler> logger)
-    : ICommandHandler<CreateRestaurantCommand, int>
+public class CreateRestaurantCommandHandler(
+    IRestaurantsRepository repository,
+    IUserContext userContext,
+    ILogger<CreateRestaurantCommandHandler> logger)
+        : ICommandHandler<CreateRestaurantCommand, int>
 {
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating Restaurant {@Request}", request);
+        var user = userContext.GetCurrentUser();
+
+        logger.LogInformation("{UserEmail} ('{UserId}') is creating restaurant {@Request}", user!.Email, user.Id, request);
 
         var entity = request.Adapt<Restaurant>();
+
+        entity.OwnerId = user.Id;
 
         var id = await repository.CreateAsync(entity);
 

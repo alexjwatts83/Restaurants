@@ -18,19 +18,22 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         if (!await dbContext.Database.CanConnectAsync())
             return;
 
-        if (!dbContext.Restaurants.Any())
-            await SeedRestaurants(dbContext);
-
         if (!dbContext.Roles.Any())
             await SeedRoles(dbContext);
 
         if (!dbContext.Users.Any())
             await SeedUsers(userManager);
+
+        if (!dbContext.Restaurants.Any())
+        {
+            var user = await userManager.FindByEmailAsync("owner@test.com");
+            await SeedRestaurants(dbContext, user!);
+        }
     }
 
-    private static async Task SeedRestaurants(RestaurantsDbContext dbContext)
+    private static async Task SeedRestaurants(RestaurantsDbContext dbContext, AppUser owner)
     {
-        var entities = GetRestaurants();
+        var entities = GetRestaurants(owner);
         dbContext.Restaurants.AddRange(entities);
         await dbContext.SaveChangesAsync();
     }
@@ -110,7 +113,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         return roles;
     }
 
-    private static List<Restaurant> GetRestaurants()
+    private static List<Restaurant> GetRestaurants(AppUser owner)
     {
         List<Restaurant> restaurants = [
             new()
@@ -144,7 +147,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
                     Street = "Cork St 5",
                     PostalCode = "WC2N 5DU"
                 },
-
+                OwnerId = owner.Id
             },
             new ()
             {
@@ -159,7 +162,8 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
                     City = "London",
                     Street = "Boots 193",
                     PostalCode = "W1F 8SR"
-                }
+                },
+                OwnerId = owner.Id
             }
         ];
 
