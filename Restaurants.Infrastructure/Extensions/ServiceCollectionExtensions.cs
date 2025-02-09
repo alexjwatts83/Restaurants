@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Identity;
 using Restaurants.Domain.Repositories;
+using Restaurants.Infrastructure.Authorization;
 using Restaurants.Infrastructure.Identity;
 using Restaurants.Infrastructure.Persistence;
 using Restaurants.Infrastructure.Repositories;
@@ -17,7 +18,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database") 
-            ?? throw new InvalidOperationException("Database Connection string was not or empty");
+            ?? throw new InvalidOperationException("Database Connection string was null or empty");
 
         services.AddDbContext<RestaurantsDbContext>((sp, options) =>
         {
@@ -28,12 +29,17 @@ public static class ServiceCollectionExtensions
 
         services.AddIdentityApiEndpoints<AppUser>()
             .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<RestaurantsUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantsDbContext>();
 
         services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
         services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
         services.AddScoped<IDishesRepository, DishesRepository>();
         services.AddScoped<IUserContext, UserContext>();
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy(PolicyNames.HasNationality,
+                builder => builder.RequireClaim(AppClaimTypes.Nationality, "German", "Polish"));
 
         return services;
     }

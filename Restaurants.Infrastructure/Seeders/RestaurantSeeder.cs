@@ -44,13 +44,15 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
 
     private static async Task SeedUsers(UserManager<AppUser> userManager)
     {
-        await SeedUser(userManager, "admin@test.com", UserRoles.Admin);
-        await SeedUser(userManager, "owner@test.com", UserRoles.Owner);
-        await SeedUser(userManager, "ckent@test.com", UserRoles.User);
-        await SeedUser(userManager, "test@test.com", UserRoles.User, "Role1");
+        await SeedUser(userManager, "admin@test.com", null, null, UserRoles.Admin);
+        await SeedUser(userManager, "owner@test.com", null, null, UserRoles.Owner);
+        await SeedUser(userManager, "ckent@test.com", null, null, UserRoles.User);
+        await SeedUser(userManager, "test@test.com", new DateOnly(1980, 1, 7), "American", UserRoles.User, "Role1");
+        await SeedUser(userManager, "german@test.com", new DateOnly(1985, 1, 7), "German", UserRoles.User);
+        await SeedUser(userManager, "polish@test.com", new DateOnly(1983, 1, 7), "Polish", UserRoles.User);
     }
 
-    private static async Task SeedUser(UserManager<AppUser> userManager, string email, params string[] roles)
+    private static async Task SeedUser(UserManager<AppUser> userManager, string email, DateOnly? dateOfBirth, string? nationality, params string[] roles)
     {
         if (userManager.Users.Any(x => x.UserName == email))
             return;
@@ -58,7 +60,9 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         var user = new AppUser
         {
             Email = email,
-            UserName = email
+            UserName = email,
+            DateOfBirth = dateOfBirth,
+            Nationality = nationality,
         };
 
         var result = await userManager.CreateAsync(user, "Pa$$wOrd321");

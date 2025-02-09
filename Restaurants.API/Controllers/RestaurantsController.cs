@@ -1,4 +1,5 @@
 ﻿using Restaurants.Domain.Constants;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 
@@ -18,6 +19,7 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<ActionResult<RestaurantDto?>> GetById(int id)
     {
         var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
