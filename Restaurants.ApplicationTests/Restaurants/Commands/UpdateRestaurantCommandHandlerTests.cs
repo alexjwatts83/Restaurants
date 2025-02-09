@@ -1,5 +1,4 @@
 ﻿using Restaurants.Domain.Exceptions;
-using Shouldly;
 
 namespace Restaurants.Application.Restaurants.Commands.Tests;
 
@@ -65,7 +64,7 @@ public class UpdateRestaurantCommandHandlerTests
     [Fact]
     public async Task Handle_WithNonExistingRestaurant_ShouldThrowNotFoundException()
     {
-        // Arrange
+        // arrange
         var restaurantId = 2;
         var request = new UpdateRestaurantCommand
         {
@@ -87,7 +86,7 @@ public class UpdateRestaurantCommandHandlerTests
     [Fact]
     public async Task Handle_WithUnauthorizedUser_ShouldThrowForbidException()
     {
-        // / Arrange
+        // arrange
         var restaurantId = 3;
         var request = new UpdateRestaurantCommand
         {
