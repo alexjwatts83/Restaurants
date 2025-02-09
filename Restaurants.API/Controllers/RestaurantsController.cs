@@ -1,4 +1,6 @@
-﻿namespace Restaurants.API.Controllers;
+﻿using Restaurants.Domain.Constants;
+
+namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -28,7 +30,7 @@ public class RestaurantsController(IMediator mediator/*, IUserContext userContex
     }
 
     [HttpPost]
-    //[Authorize(Roles = UserRoles.Owner)]
+    [Authorize(Roles = UserRoles.Owner)]
     public async Task<IActionResult> CreateAsync(CreateRestaurantCommand command)
     {
         var id = await mediator.Send(command);
