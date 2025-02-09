@@ -19,11 +19,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Application", "
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{36EDF09F-0F02-43E0-9477-53F11D23F975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.DomainTests", "Restaurants.DomainTests\Restaurants.DomainTests.csproj", "{577DAFF5-66A2-4BE5-BC44-6928C1983A1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Domain.Tests", "Restaurants.DomainTests\Restaurants.Domain.Tests.csproj", "{577DAFF5-66A2-4BE5-BC44-6928C1983A1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.InfrastructureTests", "Restaurants.InfrastructureTests\Restaurants.InfrastructureTests.csproj", "{4E4CD6A7-AB52-4D5D-831A-402FBB80E7B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Infrastructure.Tests", "Restaurants.InfrastructureTests\Restaurants.Infrastructure.Tests.csproj", "{4E4CD6A7-AB52-4D5D-831A-402FBB80E7B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.ApplicationTests", "Restaurants.ApplicationTests\Restaurants.ApplicationTests.csproj", "{4B1643F5-E2A6-4F66-A9D5-427DF74F3D02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.Application.Tests", "Restaurants.ApplicationTests\Restaurants.Application.Tests.csproj", "{4B1643F5-E2A6-4F66-A9D5-427DF74F3D02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
