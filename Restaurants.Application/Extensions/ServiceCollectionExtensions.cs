@@ -1,4 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
+using Mapster;
+using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -30,6 +32,10 @@ public static class ServiceCollectionExtensions
         config.Scan(assembly);
 
         services.AddSingleton(config);
+
+        var mapperConfig = new Mapper(config);
+
+        services.AddSingleton<IMapper>(mapperConfig);
 
         return services;
     }

@@ -1,4 +1,7 @@
-﻿namespace Restaurants.Application.Restaurants.Commands;
+﻿using MapsterMapper;
+using MediatR;
+
+namespace Restaurants.Application.Restaurants.Commands;
 
 public class UpdateRestaurantCommand : ICommand
 {
@@ -20,8 +23,9 @@ public class UpdateRestaurantCommandValidator : AbstractValidator<UpdateRestaura
 public class UpdateRestaurantCommandHandler(
     IRestaurantsRepository repository,
     IRestaurantAuthorizationService authService,
+    IMapper mapper,
     ILogger<UpdateRestaurantCommandHandler> logger)
-    : ICommandHandler<UpdateRestaurantCommand>
+        : ICommandHandler<UpdateRestaurantCommand>
 {
     public async Task<Unit> Handle(UpdateRestaurantCommand command, CancellationToken cancellationToken)
     {
@@ -35,7 +39,7 @@ public class UpdateRestaurantCommandHandler(
         if (!authService.Authorize(restaurant, ResourceOperation.Update))
             throw new ForbidException();
 
-        restaurant = command.Adapt(restaurant);
+        mapper.Map(command, restaurant);
 
         await repository.UpdateAsync(restaurant);
 

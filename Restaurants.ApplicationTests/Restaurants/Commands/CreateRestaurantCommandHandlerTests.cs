@@ -2,12 +2,6 @@
 
 public class CreateRestaurantCommandHandlerTests
 {
-    public CreateRestaurantCommandHandlerTests()
-    {
-        var config = TypeAdapterConfig.GlobalSettings;
-        config.Scan(typeof(RestaurantMappingConfig).Assembly);
-    }
-
     [Fact()]
     public async Task Handle_ForValidCommand_ReturnsCreatedRestaurantId()
     {
