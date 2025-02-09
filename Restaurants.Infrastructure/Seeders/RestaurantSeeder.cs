@@ -50,6 +50,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext, UserManager<AppU
         await SeedUser(userManager, "test@test.com", new DateOnly(1980, 1, 7), "American", UserRoles.User, "Role1");
         await SeedUser(userManager, "german@test.com", new DateOnly(1985, 1, 7), "German", UserRoles.User);
         await SeedUser(userManager, "polish@test.com", new DateOnly(1983, 1, 7), "Polish", UserRoles.User);
+        await SeedUser(userManager, "young@test.com", new DateOnly(2015, 1, 7), null, UserRoles.User);
     }
 
     private static async Task SeedUser(UserManager<AppUser> userManager, string email, DateOnly? dateOfBirth, string? nationality, params string[] roles)

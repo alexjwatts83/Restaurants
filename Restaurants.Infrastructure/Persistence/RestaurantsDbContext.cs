@@ -28,5 +28,10 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
         modelBuilder.Entity<Dish>()
             .Property(x => x.Price)
             .HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<AppUser>()
+            .HasMany(o => o.OwnedRestaurants)
+            .WithOne(r => r.Owner)
+            .HasForeignKey(r => r.OwnerId);
     }
 }

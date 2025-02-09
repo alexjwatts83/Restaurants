@@ -13,4 +13,7 @@ public class Restaurant
 
     public Address? Address { get; set; } = default!;
     public List<Dish> Dishes { get; set; } = [];
+
+    public AppUser Owner { get; set; } = default!;
+    public string OwnerId { get; set; } = default!;
 }

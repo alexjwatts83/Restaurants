@@ -6,7 +6,6 @@ public class UnassignUserRoleCommand : ICommand
     public string RoleName { get; set; } = default!;
 }
 
-
 public class UnassignUserRoleCommandHandler(
     UserManager<AppUser> userManager,
     RoleManager<IdentityRole> roleManager,

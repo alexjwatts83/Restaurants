@@ -12,17 +12,20 @@ public class RestaurantsController(IMediator mediator, IUserContext userContext)
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllAsync()
     {
         var user  = userContext.GetCurrentUser();
+
         var request = new GetAllRestaurantsQuery();
+
         var entities = await mediator.Send(request);
 
         return Ok(entities);
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = PolicyNames.HasNationality)]
+    [Authorize(Policy = PolicyNames.AtLeast20)]
     public async Task<ActionResult<RestaurantDto?>> GetById(int id)
     {
         var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
+
         return Ok(restaurant);
     }
 
