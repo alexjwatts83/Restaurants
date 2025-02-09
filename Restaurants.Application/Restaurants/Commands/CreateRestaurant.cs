@@ -1,4 +1,6 @@
-﻿namespace Restaurants.Application.Restaurants.Commands;
+﻿using MapsterMapper;
+
+namespace Restaurants.Application.Restaurants.Commands;
 
 public class CreateRestaurantCommand : ICommand<int>
 {
@@ -47,6 +49,7 @@ public class CreateRestaurantCommandHandler(
     IRestaurantsRepository repository,
     IUserContext userContext,
     IRestaurantAuthorizationService authService,
+    IMapper mapper,
     ILogger<CreateRestaurantCommandHandler> logger)
         : ICommandHandler<CreateRestaurantCommand, int>
 {
@@ -56,7 +59,7 @@ public class CreateRestaurantCommandHandler(
 
         logger.LogInformation("{UserEmail} ('{UserId}') is creating restaurant {@Request}", user!.Email, user.Id, request);
 
-        var entity = request.Adapt<Restaurant>();
+        var entity = mapper.Map<Restaurant>(request);
 
         if (!authService.Authorize(entity, ResourceOperation.Create))
             throw new ForbidException();
