@@ -1,23 +1,39 @@
 using Restaurants.API.Extensions;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Application.Extensions;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+try
+{
+    Log.Information("Building App - Start");
 
-// Add services to the container.
-builder.Services
-    .AddApplicationServices()
-    .AddInfrastructureServices(builder.Configuration)
-    .AddPresentation(builder.Host);
+    var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+    // Add services to the container.
+    builder.Services
+        .AddApplicationServices()
+        .AddInfrastructureServices(builder.Configuration)
+        .AddPresentation(builder.Host);
 
-// Configure the HTTP request pipeline.
+    var app = builder.Build();
 
-app.BuildRequestPipeLine();
+    // Configure the HTTP request pipeline.
 
-await app.InitialiseDatabaseAsync();
+    app.BuildRequestPipeLine();
 
-app.Run();
+    await app.InitialiseDatabaseAsync();
+
+    app.Run();
+
+    Log.Information("Building App - Complete");
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application startup failed");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 
 public partial class Program { }

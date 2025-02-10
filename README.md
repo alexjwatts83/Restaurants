@@ -20,6 +20,29 @@ To view the actual events in seq
 
 - http://localhost:81
 
+## Azure
+
+### Web App
+
+Nice option is to view advanced settings
+
+- Navigate to web service
+- Under Development Tools --> Advanced tool. Click on the go button to bring you to a new web page
+
+### Problem
+
+*Basic authentication is disabled* when trying to **Download publish profile**
+
+### fix
+
+- Under settings | Configuration | "General settings", Ensure that both SCM Basic Auth Publishing and FTP Basic Auth Publishing are "ON". --> Save
+- Navigate back to "Overview" --> STOP web app.
+- (Publishing Profile should be come available now)
+- Restart your application
+
+
+
+
 ## Other
 
 - *optional* - Add json viewer extension in chrome https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
