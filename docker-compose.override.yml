@@ -29,3 +29,17 @@ services:
       - "81:80"
     volumes:
       - seq-data:/data
+
+  azurite:
+    container_name: azurite
+    image: mcr.microsoft.com/azure-storage/azurite
+    expose:
+      - 10000
+      - 10001
+      - 10002
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    volumes:
+      - azurite-volume:/data mcr.microsoft.com/azure-storage/azurite

@@ -8,7 +8,12 @@ services:
   seq:
     image: datalust/seq:latest
 
+  azurite:
+    container_name: azurite
+    image: mcr.microsoft.com/azure-storage/azurite:3.27.0
+
 volumes:
   sql-data:
   redis-data:
   seq-data:
+  azurite-volume:  
