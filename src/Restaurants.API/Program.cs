@@ -5,7 +5,7 @@ using Serilog;
 
 try
 {
-    Log.Information("Building App - Start");
+    Log.Warning("Building App - Start");
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +25,7 @@ try
 
     app.Run();
 
-    Log.Information("Building App - Complete");
+    Log.Warning("Building App - Complete");
 }
 catch (Exception ex)
 {
