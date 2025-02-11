@@ -40,10 +40,7 @@ Nice option is to view advanced settings
 - (Publishing Profile should be come available now)
 - Restart your application
 
-
-
-
 ## Other
 
 - *optional* - Add json viewer extension in chrome https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
-
+- can only merge into main not push directly into it
