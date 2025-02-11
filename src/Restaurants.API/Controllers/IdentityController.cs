@@ -4,7 +4,7 @@ namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/identity")]
-public class IdentityController(IMediator mediator) : ControllerBase
+public class IdentityController(IMediator mediator, IServiceProvider sp) : ControllerBase
 {
     [HttpPatch("user")]
     [Authorize]
@@ -42,5 +42,13 @@ public class IdentityController(IMediator mediator) : ControllerBase
         await mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpGet("random")]
+    public IActionResult GetRandom()
+    {
+        var hostingEnvironment = sp.GetService<IHostEnvironment>();
+
+        return Ok($"{hostingEnvironment!.ApplicationName} - {hostingEnvironment.EnvironmentName}");
     }
 }

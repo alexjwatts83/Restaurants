@@ -43,6 +43,25 @@ jobs:
           name: api-artifact
       - name : Deploy to Azure Web App
         uses: Azure/webapps-deploy@v3.0.1
+        id: deploy-to-webapp
         with:
           app-name: 'restaurants-api-dev-awatts'
           publish-profile:  ${{ secrets.PUBLISH_PROFILE_DEV }}
+
+  deploy-prod:
+    environment: 
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: api-artifact
+      - name : Deploy to Azure Web App
+        uses: Azure/webapps-deploy@v3.0.1
+        id: deploy-to-webapp
+        with:
+          app-name: 'restaurants-api-prod-awatts'
+          publish-profile:  ${{ secrets.PUBLISH_PROFILE_PROD  }}
