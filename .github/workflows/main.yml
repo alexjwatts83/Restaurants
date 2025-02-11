@@ -11,9 +11,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
-      PROJECT_PATH: .\src\Restaurants.API
+      PROJECT_PATH: ./src/Restaurants.API
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
