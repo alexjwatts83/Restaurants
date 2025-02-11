@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_PATH: .\src\Restaurants.API
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -20,8 +22,8 @@ jobs:
         with:
           dotnet-version: '8.x'
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ${{env.PROJECT_PATH}}
       - name:  Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore ${{env.PROJECT_PATH}}
       - name: Test
-        run: dotnet test 
+        run: dotnet test Restaurants.sln
