@@ -19,9 +19,9 @@ jobs:
         with:
           dotnet-version: '8.x'
       - name: Restore dependencies
-        run: dotnet restore ${{env.PROJECT_PATH}} -c Release
+        run: dotnet restore ${{env.PROJECT_PATH}}
       - name:  Build
-        run: dotnet build --no-restore ${{env.PROJECT_PATH}}
+        run: dotnet build --no-restore ${{env.PROJECT_PATH}} -c Release
       - name: Publish
         run: dotnet publish ${{env.PROJECT_PATH}} -c Release -o "${{env.DOTNET_ROOT}}/api" --no-build
       - name: Upload artifact for deployment job
